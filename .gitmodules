@@ -1,6 +1,3 @@
-[submodule "thrid_party/boost"]
-	path = thrid_party/boost
-	url = https://github.com/boostorg/boost.git
 [submodule "thrid_party/googletest"]
 	path = thrid_party/googletest
 	url = https://github.com/google/googletest.git
