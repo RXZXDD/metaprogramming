@@ -1,11 +1,15 @@
 #include "c2-0.hpp"
 #include <gtest/gtest.h>
 
-int main(){
-    printf("Running main() from %s\n", __FILE__);
 
+TEST(c20,c201){
+   
     EXPECT_EQ(test(), 0);
-    //EXPECT_EQ(test(), 1) << "FAILED";
-
-    return 0;
 }
+// int main(){
+
+    
+//     //EXPECT_EQ(test(), 1) << "FAILED";
+
+//     return 0;
+// }

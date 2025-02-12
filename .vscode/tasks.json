@@ -10,19 +10,18 @@
                 "/std:c++20",
                 "/WX",
                 "/I",
-                "${workspaceFolder}\\thrid_party\\boost\\includes",
+                "${workspaceFolder}\\thrid_party\\boost",
                 "/I",
-                "${workspaceFolder}\\thrid_party\\gtest\\includes",
+                "${workspaceFolder}\\thrid_party\\googletest\\googletest\\include",
                 "/I",
                 "${workspaceFolder}\\include",
                 //"${workspaceFolder}\\thrid_party\\*.hpp",
-                
 
                 "/Fe:",
                 "${workspaceFolder}\\out\\${fileBasenameNoExtension}-unittest.exe",
 
-                "${workspaceFolder}\\thrid_party\\gtest\\lib\\gtest.lib",
-                "${workspaceFolder}\\thrid_party\\gtest\\lib\\gtest_main.lib",
+                "${workspaceFolder}\\thrid_party\\googletest\\build\\lib\\Release\\gtest.lib",
+                "${workspaceFolder}\\thrid_party\\googletest\\build\\lib\\Release\\gtest_main.lib",
                 "${workspaceFolder}\\src\\${fileBasenameNoExtension}.cpp",
                 "${workspaceFolder}\\src\\${fileBasenameNoExtension}-unittest.cpp",
                 "${workspaceFolder}\\src\\unittest_entry.cpp",
