@@ -3,4 +3,3 @@ out/
 *.obj
 include/vc140.pdb
 include/report-file.xml
-include/report-file.xml
