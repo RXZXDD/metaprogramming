@@ -5,58 +5,22 @@
 #include <boost/type_traits/is_class.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/add_const.hpp>
+#include <boost/mpl/bool.hpp>
+
 
 using namespace boost;
 
 class c40{};
 
-template<bool x>
-struct bool_{
-    static bool const value = x;
-    typedef bool_<x>  type;
-    typedef bool value_type;
-    operator bool() const {return x;}
+template<typename a, typename b>
+struct Logical_and{
+    static constexpr bool value = a::value && b::value;
 };
 
-typedef bool_<true> Ltrue; 
-typedef bool_<false> Lfalse; 
-//----------------------------
-
-template<bool C_, typename t1>
-struct Logical_or_imp : Ltrue
-{};
-
-// template<typename t1, typename t2>
-// struct Logical_or_imp : Logical_or_imp <false, t2>
-// {};
-
-template<>
-struct Logical_or_imp<false, Lfalse> : Lfalse
-{};
-
-
-template <typename t1,typename t2>
-struct Logical_or :Logical_or_imp<t1::value,t2>
-{};
-//--------------------------------------
-template<bool C_, typename t1>
-struct Logical_and_imp: Lfalse
-{};
-
-
-// template<typename t1, typename t2>
-// struct Logical_and_imp : Logical_and_imp<true, t2>
-// {};
-
-template<>
-struct Logical_and_imp<true,Ltrue> : Ltrue
-{};
-
-template<typename t1, typename t2>
-struct Logical_and: Logical_and_imp<t1::value, t2>
-{};
-
-//------------------------------
+template<typename a, typename b>
+struct Logical_or{
+    static constexpr bool value = a::value || b::value;
+};
 
 template<typename T>
 struct ParamTypeOr : mpl::eval_if<
