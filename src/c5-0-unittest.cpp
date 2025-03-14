@@ -14,7 +14,7 @@ TEST(c50, at)
 
 }
 
-TEST(c50, begin)
+TEST(c50, distance)
 {
     Tiny<int, bool, float> t;
     typedef mpl::begin<decltype(t)>::type begin;
@@ -26,14 +26,13 @@ TEST(c50, begin)
 
 }
 
-// TEST(c50, end)
-// {
-//     Tiny<int, bool, float> t;
+TEST(c50, deref)
+{
+    Tiny<int, bool, float> t;
+    typedef mpl::begin<decltype(t)>::type begin;
+    typedef mpl::next<begin>::type supose_bool;
+    constexpr bool b = std::is_same_v<mpl::deref<supose_bool>::type
+                            , mpl::deref<mpl::advance<begin, mpl::int_<1>>::type>::type>;
+    static_assert(b == true);
 
-//     constexpr bool b = std::is_same<
-//                     mpl::end<decltype(t)>::type
-//                     , bool
-//                     >::value;
-//     static_assert(b == true);
-
-// }
+}
