@@ -88,9 +88,29 @@ struct demension_at<demension<T[D0][D1][D2]>,2> : mpl::int_<D0>{
         struct apply: demension_at<demension, N::value>{};
     };
 
+    // template<>
+    // struct push_back_impl<demension_tag>{
+    //     template<class seq, class T>
+    //     struct apply: demension_push_back<seq, T>{};
+    // };
+
     template<>
-    struct push_back_impl<demension_tag>{
-        template<class seq, class T>
-        struct apply: demension_push_back<seq, T>{};
+    struct begin_impl<demension_tag>{
+        template<class seq>
+        struct apply{
+            using type = demension_iterator<seq, int_<0>>;
+        };
+    };
+
+    template<>
+    struct end_impl<demension_tag>{
+        template<class seq>
+        struct apply{
+            using type = demension_iterator<seq,
+                                         typename mpl::int_<
+                                         mpl::size<seq>::value-1
+                                         >
+                                         >;
+        };
     };
 }}
