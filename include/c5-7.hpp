@@ -1,0 +1,96 @@
+#include <boost/mpl/size.hpp>
+#include <boost/mpl/at.hpp>
+#include <boost/mpl/iterator_tags.hpp>
+#include <boost/mpl/push_back.hpp>
+
+struct demension_tag{};
+
+using namespace boost;
+
+template<class T>
+struct demension
+{
+    typedef T type;
+    typedef demension_tag tag;
+};
+
+template<class T, class Pos>
+struct demension_iterator{
+    using category = mpl::bidirectional_iterator_tag;
+};
+
+
+template<class T>
+struct myrank : mpl::int_<0>{};
+
+// template<class T>
+// struct myrank<T[]> :  mpl::int_<myrank<T>::value + 1>{
+
+// };
+
+template<class T,int N>
+struct myrank<T[N]> : mpl::int_<myrank<T>::value + 1>{
+
+};
+
+
+template<class T>
+struct Myrank : myrank<T>{};
+
+
+
+template<class T>
+struct demension_size;
+
+template<class T>
+struct demension_size<demension<T>> : Myrank<T>{};//std::rank<T>{};
+
+
+
+namespace boost { namespace mpl{
+
+    template<class T, int N>
+struct demension_at;
+
+template<class T, int D0>
+struct demension_at<demension<T[D0]>,0> : mpl::int_<D0>{};
+
+
+template<class T, int D0, int D1>
+struct demension_at<demension<T[D0][D1]>,0> : mpl::int_<D1>{};
+
+template<class T, int D0, int D1>
+struct demension_at<demension<T[D0][D1]>,1> : mpl::int_<D0>{};
+
+template<class T, int D0, int D1, int D2>
+struct demension_at<demension<T[D0][D1][D2]>,0> : mpl::int_<D2>{};
+
+template<class T, int D0, int D1, int D2>
+struct demension_at<demension<T[D0][D1][D2]>,1> : mpl::int_<D1>{};
+
+template<class T, int D0, int D1, int D2>
+struct demension_at<demension<T[D0][D1][D2]>,2> : mpl::int_<D0>{
+    using AT = T;
+};
+
+    template<>
+    struct size_impl<demension_tag>
+    {
+        template<class demension>
+        struct apply :  demension_size<demension>{};
+
+    };
+
+    template<>
+    struct at_impl<demension_tag>
+    {
+        template<class demension, class N>
+        struct apply: demension_at<demension, N::value>{};
+    };
+
+    template<>
+    struct push_back_impl<demension_tag>{
+        template<class seq, class T>
+        struct apply: demension_push_back<seq, T>{};
+    };
+}}
