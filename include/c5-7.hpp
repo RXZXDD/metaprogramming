@@ -2,6 +2,7 @@
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/iterator_tags.hpp>
 #include <boost/mpl/push_back.hpp>
+#include <boost/mpl/insert.hpp>
 
 struct demension_tag{};
 
@@ -45,6 +46,12 @@ struct demension_size;
 template<class T>
 struct demension_size<demension<T>> : Myrank<T>{};//std::rank<T>{};
 
+template<class seq, int Pos, class T>
+struct demension_insert;
+
+
+
+
 
 
 namespace boost { namespace mpl{
@@ -73,6 +80,10 @@ struct demension_at<demension<T[D0][D1][D2]>,2> : mpl::int_<D0>{
     using AT = T;
 };
 
+// template<class seq, class T>
+// struct demension_push_back;
+
+
     template<>
     struct size_impl<demension_tag>
     {
@@ -95,6 +106,12 @@ struct demension_at<demension<T[D0][D1][D2]>,2> : mpl::int_<D0>{
     // };
 
     template<>
+    struct insert_impl<demension_tag>{
+        template<class seq, class Pos, class T>
+        struct apply: demension_insert<seq, Pos::value, T>{};
+    };
+
+    template<>
     struct begin_impl<demension_tag>{
         template<class seq>
         struct apply{
@@ -113,4 +130,8 @@ struct demension_at<demension<T[D0][D1][D2]>,2> : mpl::int_<D0>{
                                          >;
         };
     };
+
+
+    template<class seq, class Pos>
+    struct deref<demension_iterator<seq, Pos>> : demension_at<seq, Pos::value>{    };
 }}

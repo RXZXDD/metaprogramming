@@ -15,9 +15,13 @@ TEST(c56, Q)
 }
 
 
-// TEST(c57, Q)
-// {
-//    typedef demension<char [10][5][2]> seq;
-//    BOOST_STATIC_ASSERT(mpl::begin<seq> == 3);
+TEST(c57, Q)
+{
+   typedef demension<char [10][5][2]> seq;
+   using begin_it = demension_iterator<seq, mpl::int_<0>>;
+   using end_it = demension_iterator<seq, mpl::int_<2>>;
+//    using begin_val = ;
+   BOOST_STATIC_ASSERT(mpl::deref<begin_it>::value == 2);
+   BOOST_STATIC_ASSERT(mpl::deref<end_it>::value == 10);
    
-// }
+}

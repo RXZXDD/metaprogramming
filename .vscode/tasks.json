@@ -9,6 +9,8 @@
                 "/EHsc",
                 "/std:c++20",
                 "/WX",
+                //"/P",
+               // "/E",
                 "/I",
                 "${workspaceFolder}\\thrid_party\\boost",
                 "/I",
